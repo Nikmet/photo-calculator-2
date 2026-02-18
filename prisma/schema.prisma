@@ -1,0 +1,24 @@
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
+}
+
+model PriceItem {
+    id        String   @id @default(uuid())
+    name      String   @unique
+    label     String
+    value     Int
+    minValue  Int      @default(100)
+    updatedAt DateTime @updatedAt
+}
+
+model AppConfig {
+    id                Int      @id @default(1)
+    minPrice          Int      @default(100)
+    luversStepDefault Int      @default(500)
+    updatedAt         DateTime @updatedAt
+}

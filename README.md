@@ -1,36 +1,79 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Photo Calculator 2
 
-## Getting Started
+Переписанная версия калькулятора услуг фотосалона на:
+- Next.js (App Router, TypeScript)
+- Prisma
+- Postgres
+- Tailwind CSS
 
-First, run the development server:
+## Функциональность
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- Калькуляторы:
+  - `/banner`
+  - `/tape`
+  - `/cut`
+  - `/termo`
+- Общий блок размеров (ширина/высота -> площадь/периметр) в layout.
+- Цены и настройки читаются из БД.
+- Для каждой позиции цены есть свой минимальный порог (`minValue`).
+- Админка:
+  - `/admin/prices` - редактирование цен, минимальных порогов и reset к seed
+  - `/admin/min-price` - `minPrice` и `luversStepDefault`
+- Защита админских endpoints через `x-admin-token`.
+
+## ENV
+
+Создайте `.env` (можно скопировать из `.env.example`):
+
+```env
+DATABASE_URL="postgresql://USER:PASSWORD@HOST:5432/DB?sslmode=require"
+ADMIN_TOKEN="your-admin-token"
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Локальный запуск (bun)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+bun install
+bunx prisma migrate dev
+bunx prisma db seed
+bun run dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Открыть: `http://localhost:3000`
 
-## Learn More
+## Деплой (готово для Vercel)
 
-To learn more about Next.js, take a look at the following resources:
+1. Добавьте переменные окружения в проект:
+   - `DATABASE_URL`
+   - `ADMIN_TOKEN`
+2. Примените миграции в проде:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+bun run prisma:migrate:deploy
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+3. Соберите проект:
 
-## Deploy on Vercel
+```bash
+bun run build
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+`postinstall` уже вызывает `prisma generate`, поэтому Prisma Client будет сгенерирован автоматически при установке зависимостей.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Полезные команды
+
+```bash
+bun run lint
+bun run build
+bun run prisma:generate
+bun run prisma:migrate
+bun run prisma:seed
+```
+
+## API
+
+- `GET /api/prices`
+- `PATCH /api/prices/:name` (body: `{ value?, minValue? }`, требует `x-admin-token`)
+- `POST /api/prices/reset` (body: `{ "confirmation": "reset data" }`, требует `x-admin-token`)
+- `GET /api/config`
+- `PATCH /api/config` (требует `x-admin-token`)
