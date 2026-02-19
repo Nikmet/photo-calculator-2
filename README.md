@@ -77,3 +77,9 @@ bun run prisma:seed
 - `POST /api/prices/reset` (body: `{ "confirmation": "reset data" }`, требует `x-admin-token`)
 - `GET /api/config`
 - `PATCH /api/config` (требует `x-admin-token`)
+
+## PWA
+
+- Добавлены `manifest.webmanifest` и service worker (`public/sw.js`).
+- В шапке есть кнопка `Установить приложение` (показывается, когда браузер поддерживает install prompt).
+- Для установки нужен HTTPS (или localhost в dev-режиме).

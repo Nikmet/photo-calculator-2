@@ -4,6 +4,7 @@ import clsx from "clsx";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { SizePanel } from "@/components/calculator/size-panel";
+import { PwaInstallButton } from "@/components/pwa/pwa-install-button";
 
 const links = [
   { href: "/", label: "Главная" },
@@ -30,6 +31,7 @@ export function SiteHeader() {
             </h1>
           </div>
           <nav className="flex flex-wrap gap-2">
+            <PwaInstallButton />
             {links.map((link) => {
               const active = pathname === link.href;
               return (

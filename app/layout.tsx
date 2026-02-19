@@ -1,5 +1,6 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Manrope, Roboto_Mono } from "next/font/google";
+import { PwaRegister } from "@/components/pwa/pwa-register";
 import { AppProviders } from "@/components/ui/app-providers";
 import "./globals.css";
 
@@ -15,7 +16,17 @@ const robotoMono = Roboto_Mono({
 
 export const metadata: Metadata = {
   title: "Photo Calculator",
-  description: "Современный калькулятор услуг фотосалона",
+  description: "Photo studio service calculator",
+  manifest: "/manifest.webmanifest",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "default",
+    title: "Photo Calculator",
+  },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#2d7f71",
 };
 
 export default function RootLayout({
@@ -27,6 +38,7 @@ export default function RootLayout({
     <html lang="ru">
       <body className={`${manrope.variable} ${robotoMono.variable} antialiased`}>
         <AppProviders>
+          <PwaRegister />
           <div className="min-h-screen bg-[var(--bg)] text-[var(--text)]">{children}</div>
         </AppProviders>
       </body>
