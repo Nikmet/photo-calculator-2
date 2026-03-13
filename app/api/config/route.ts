@@ -5,14 +5,25 @@ import { prisma } from "@/lib/prisma";
 import { updateConfigSchema } from "@/lib/validators/config";
 
 export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
+const NO_STORE_HEADERS = {
+  "Cache-Control": "no-store, no-cache, must-revalidate, proxy-revalidate",
+  Pragma: "no-cache",
+  Expires: "0",
+};
 
 export async function GET() {
   const config = await getOrCreateAppConfig();
-  return NextResponse.json({
-    minPrice: config.minPrice,
-    luversStepDefault: config.luversStepDefault,
-    updatedAt: config.updatedAt.toISOString(),
-  });
+  return NextResponse.json(
+    {
+      minPrice: config.minPrice,
+      luversStepDefault: config.luversStepDefault,
+      updatedAt: config.updatedAt.toISOString(),
+    },
+    { headers: NO_STORE_HEADERS },
+  );
 }
 
 export async function PATCH(request: NextRequest) {

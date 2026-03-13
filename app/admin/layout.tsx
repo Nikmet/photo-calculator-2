@@ -1,10 +1,11 @@
-"use client";
+﻿"use client";
 
 import clsx from "clsx";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState, type PropsWithChildren } from "react";
 import { AdminTokenProvider, useAdminToken } from "@/components/admin/admin-token-context";
+import { APP_VERSION } from "@/lib/constants";
 
 const links = [
   { href: "/admin/prices", label: "Цены" },
@@ -25,6 +26,7 @@ function AdminLayoutBody({ children }: PropsWithChildren) {
               ← На главную
             </Link>
             <h1 className="mt-2 text-2xl font-semibold">Панель администратора</h1>
+            <p className="mt-1 text-xs text-[var(--muted)]">Версия приложения: {APP_VERSION}</p>
           </div>
 
           <label className="flex min-w-72 flex-col gap-2">

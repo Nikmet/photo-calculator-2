@@ -1,10 +1,11 @@
-"use client";
+﻿"use client";
 
 import clsx from "clsx";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { SizePanel } from "@/components/calculator/size-panel";
 import { PwaInstallButton } from "@/components/pwa/pwa-install-button";
+import { APP_VERSION } from "@/lib/constants";
 
 const links = [
   { href: "/", label: "Главная" },
@@ -24,7 +25,7 @@ export function SiteHeader() {
         <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
           <div>
             <p className="text-xs font-semibold uppercase tracking-[0.24em] text-[var(--accent-strong)]">
-              Photo Studio
+              Photo Studio · v{APP_VERSION}
             </p>
             <h1 className="text-4xl font-semibold tracking-tight text-[var(--text)] sm:text-5xl">
               Photo Calculator

@@ -1,3 +1,5 @@
+export const APP_VERSION = "1.1";
+
 export const PRICE_NAMES = [
   "b300",
   "b400",

@@ -1,6 +1,7 @@
-"use client";
+﻿"use client";
 
 import { useMemo, useState } from "react";
+import { CalculatorLoading } from "@/components/calculator/calculator-loading";
 import { useCalculatorDimensions } from "@/components/calculator/calculator-context";
 import { Card } from "@/components/ui/card";
 import { CheckboxField } from "@/components/ui/checkbox-field";
@@ -61,53 +62,56 @@ export default function CutPage() {
         <p className="mt-2 text-sm text-[var(--muted)]">
           Множитель сложности: {CUT_MULTIPLIER[difficulty]}x. Гравировка добавляет фикс {prices.env} руб.
         </p>
-        {isLoading ? <p className="mt-2 text-xs text-[var(--muted)]">Загрузка цен...</p> : null}
       </Card>
 
-      <div className="grid gap-5 lg:grid-cols-3">
-        <Card className="space-y-4 lg:col-span-2">
-          <h3 className="text-base font-semibold">Ввод цен и опций</h3>
-          <div className="grid gap-4 md:grid-cols-2">
-            <NumberInput
-              id="cut-plywood"
-              label="Фанера"
-              unit="руб/м²"
-              value={plywood}
-              onChange={(value) => setPlywoodOverride(value)}
-            />
-            <div className="space-y-3">
+      {isLoading ? (
+        <CalculatorLoading inputRows={3} resultRows={2} />
+      ) : (
+        <div className="grid gap-5 lg:grid-cols-3">
+          <Card className="space-y-4 lg:col-span-2">
+            <h3 className="text-base font-semibold">Ввод цен и опций</h3>
+            <div className="grid gap-4 md:grid-cols-2">
               <NumberInput
-                id="cut-acrylic"
-                label="Акрил"
+                id="cut-plywood"
+                label="Фанера"
                 unit="руб/м²"
-                value={acrylic}
-                onChange={(value) => setAcrylicOverride(value)}
+                value={plywood}
+                onChange={(value) => setPlywoodOverride(value)}
               />
-              <CheckboxField
-                id="cut-engraving"
-                label="С гравировкой"
-                checked={withEngraving}
-                onChange={setWithEngraving}
-              />
+              <div className="space-y-3">
+                <NumberInput
+                  id="cut-acrylic"
+                  label="Акрил"
+                  unit="руб/м²"
+                  value={acrylic}
+                  onChange={(value) => setAcrylicOverride(value)}
+                />
+                <CheckboxField
+                  id="cut-engraving"
+                  label="С гравировкой"
+                  checked={withEngraving}
+                  onChange={setWithEngraving}
+                />
+              </div>
+              <div className="md:col-span-2">
+                <SelectField
+                  id="cut-difficulty"
+                  label="Уровень сложности"
+                  value={difficulty}
+                  options={difficultyOptions}
+                  onChange={(value) => setDifficulty(value as CutDifficulty)}
+                />
+              </div>
             </div>
-            <div className="md:col-span-2">
-              <SelectField
-                id="cut-difficulty"
-                label="Уровень сложности"
-                value={difficulty}
-                options={difficultyOptions}
-                onChange={(value) => setDifficulty(value as CutDifficulty)}
-              />
-            </div>
-          </div>
-        </Card>
+          </Card>
 
-        <Card className="space-y-3 bg-white">
-          <h3 className="text-base font-semibold">Результат</h3>
-          <ResultItem label="Фанера" value={totals.plywoodTotal} />
-          <ResultItem label="Акрил" value={totals.acrylicTotal} />
-        </Card>
-      </div>
+          <Card className="space-y-3 bg-white">
+            <h3 className="text-base font-semibold">Результат</h3>
+            <ResultItem label="Фанера" value={totals.plywoodTotal} />
+            <ResultItem label="Акрил" value={totals.acrylicTotal} />
+          </Card>
+        </div>
+      )}
     </div>
   );
 }

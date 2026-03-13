@@ -3,6 +3,14 @@ import { PRICE_ORDER } from "@/lib/constants";
 import { prisma } from "@/lib/prisma";
 
 export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
+const NO_STORE_HEADERS = {
+  "Cache-Control": "no-store, no-cache, must-revalidate, proxy-revalidate",
+  Pragma: "no-cache",
+  Expires: "0",
+};
 
 export async function GET() {
   const items = await prisma.priceItem.findMany();
@@ -23,5 +31,6 @@ export async function GET() {
       minValue: item.minValue,
       updatedAt: item.updatedAt.toISOString(),
     })),
+    { headers: NO_STORE_HEADERS },
   );
 }

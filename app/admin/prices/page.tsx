@@ -1,15 +1,38 @@
-"use client";
+﻿"use client";
 
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useAdminToken } from "@/components/admin/admin-token-context";
 import { Card } from "@/components/ui/card";
 import { NumberInput } from "@/components/ui/number-input";
+import { Skeleton } from "@/components/ui/skeleton";
 import { useToast } from "@/components/ui/toast-provider";
 import { PRICE_UNIT_BY_NAME } from "@/lib/constants";
 import { normalizeInteger } from "@/lib/math";
+import { emitPricingSync } from "@/lib/pricing-sync";
 import type { PriceItemDto } from "@/lib/types";
 
 type DraftValues = Record<string, number>;
+
+function PriceItemsSkeleton() {
+  return (
+    <div className="mt-4 grid gap-4">
+      {Array.from({ length: 6 }).map((_, index) => (
+        <div
+          key={`price-skeleton-${index}`}
+          className="grid gap-3 rounded-xl border border-[var(--border)] bg-white p-4 md:grid-cols-[1fr_170px_170px_130px]"
+        >
+          <div className="space-y-2">
+            <Skeleton className="h-5 w-44" />
+            <Skeleton className="h-4 w-32" />
+          </div>
+          <Skeleton className="h-11 w-full self-end" />
+          <Skeleton className="h-11 w-full self-end" />
+          <Skeleton className="h-11 w-full self-end" />
+        </div>
+      ))}
+    </div>
+  );
+}
 
 export default function AdminPricesPage() {
   const { token } = useAdminToken();
@@ -95,6 +118,7 @@ export default function AdminPricesPage() {
             : item,
         ),
       );
+      emitPricingSync();
       showSuccess(`Позиция "${name}" успешно сохранена.`);
     } catch (error) {
       showError(error instanceof Error ? error.message : "Ошибка сохранения позиции.");
@@ -127,6 +151,7 @@ export default function AdminPricesPage() {
       }
 
       setResetConfirmation("");
+      emitPricingSync();
       showSuccess("Все цены и минимальные пороги сброшены к начальному состоянию.");
       await loadPrices();
     } catch (error) {
@@ -148,7 +173,7 @@ export default function AdminPricesPage() {
       <Card>
         <h3 className="text-base font-semibold">Список позиций</h3>
         {isLoading ? (
-          <p className="mt-3 text-sm text-[var(--muted)]">Загрузка...</p>
+          <PriceItemsSkeleton />
         ) : (
           <div className="mt-4 grid gap-4">
             {items.map((item) => (
@@ -209,7 +234,7 @@ export default function AdminPricesPage() {
           type="text"
           value={resetConfirmation}
           onChange={(event) => setResetConfirmation(event.target.value)}
-          className="h-11 w-full max-w-sm rounded-xl border border-[var(--border)] bg-white px-3 text-sm outline-none transition-all duration-300 focus:border-[var(--accent)] focus:ring-2 focus:ring-[var(--accent-soft)] mr-2"
+          className="mr-2 h-11 w-full max-w-sm rounded-xl border border-[var(--border)] bg-white px-3 text-sm outline-none transition-all duration-300 focus:border-[var(--accent)] focus:ring-2 focus:ring-[var(--accent-soft)]"
           placeholder="reset data"
         />
         <button

@@ -1,12 +1,32 @@
-"use client";
+﻿"use client";
 
 import { useCallback, useEffect, useState } from "react";
 import { useAdminToken } from "@/components/admin/admin-token-context";
 import { Card } from "@/components/ui/card";
 import { NumberInput } from "@/components/ui/number-input";
+import { Skeleton } from "@/components/ui/skeleton";
 import { useToast } from "@/components/ui/toast-provider";
 import { normalizeInteger } from "@/lib/math";
+import { emitPricingSync } from "@/lib/pricing-sync";
 import type { AppConfigDto } from "@/lib/types";
+
+function MinPriceSkeleton() {
+  return (
+    <div className="space-y-4">
+      <div className="grid gap-4 md:grid-cols-2">
+        <div className="space-y-2">
+          <Skeleton className="h-4 w-40" />
+          <Skeleton className="h-11 w-full" />
+        </div>
+        <div className="space-y-2">
+          <Skeleton className="h-4 w-44" />
+          <Skeleton className="h-11 w-full" />
+        </div>
+      </div>
+      <Skeleton className="h-11 w-52" />
+    </div>
+  );
+}
 
 export default function AdminMinPricePage() {
   const { token } = useAdminToken();
@@ -65,6 +85,7 @@ export default function AdminMinPricePage() {
         throw new Error(responseBody.message ?? "Не удалось сохранить настройки.");
       }
 
+      emitPricingSync();
       showSuccess("Базовые настройки успешно сохранены.");
       await loadConfig();
     } catch (error) {
@@ -85,7 +106,7 @@ export default function AdminMinPricePage() {
 
       <Card className="space-y-4">
         {isLoading ? (
-          <p className="text-sm text-[var(--muted)]">Загрузка...</p>
+          <MinPriceSkeleton />
         ) : (
           <>
             <div className="grid gap-4 md:grid-cols-2">

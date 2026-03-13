@@ -10,7 +10,8 @@ export function PwaRegister() {
 
     const register = async () => {
       try {
-        await navigator.serviceWorker.register("/sw.js", { scope: "/" });
+        const registration = await navigator.serviceWorker.register("/sw.js", { scope: "/" });
+        await registration.update();
       } catch {
         // SW registration failure should not break the app.
       }

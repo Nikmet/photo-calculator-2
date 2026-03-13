@@ -1,5 +1,6 @@
-const CACHE_NAME = "photo-calculator-v1";
-const RUNTIME_CACHE = "photo-calculator-runtime-v1";
+﻿const APP_VERSION = "1.1";
+const CACHE_NAME = `photo-calculator-shell-v${APP_VERSION}`;
+const RUNTIME_CACHE = `photo-calculator-runtime-v${APP_VERSION}`;
 const APP_SHELL = ["/", "/manifest.webmanifest", "/icon.png", "/logo.png", "/favicon.ico"];
 
 self.addEventListener("install", (event) => {
@@ -24,6 +25,10 @@ self.addEventListener("activate", (event) => {
   self.clients.claim();
 });
 
+function shouldCacheResponse(response) {
+  return response && response.ok && response.type === "basic";
+}
+
 self.addEventListener("fetch", (event) => {
   if (event.request.method !== "GET") {
     return;
@@ -35,14 +40,21 @@ self.addEventListener("fetch", (event) => {
     return;
   }
 
+  if (requestUrl.pathname.startsWith("/api/")) {
+    event.respondWith(fetch(event.request, { cache: "no-store" }));
+    return;
+  }
+
   const isDocument = event.request.mode === "navigate";
 
   if (isDocument) {
     event.respondWith(
       fetch(event.request)
         .then((response) => {
-          const responseClone = response.clone();
-          caches.open(RUNTIME_CACHE).then((cache) => cache.put(event.request, responseClone));
+          if (shouldCacheResponse(response)) {
+            const responseClone = response.clone();
+            caches.open(RUNTIME_CACHE).then((cache) => cache.put(event.request, responseClone));
+          }
           return response;
         })
         .catch(async () => {
@@ -55,15 +67,15 @@ self.addEventListener("fetch", (event) => {
 
   event.respondWith(
     caches.match(event.request).then((cached) => {
-      if (cached) {
-        return cached;
-      }
-
-      return fetch(event.request).then((response) => {
-        const responseClone = response.clone();
-        caches.open(RUNTIME_CACHE).then((cache) => cache.put(event.request, responseClone));
+      const fetchPromise = fetch(event.request).then((response) => {
+        if (shouldCacheResponse(response)) {
+          const responseClone = response.clone();
+          caches.open(RUNTIME_CACHE).then((cache) => cache.put(event.request, responseClone));
+        }
         return response;
       });
+
+      return cached || fetchPromise;
     }),
   );
 });

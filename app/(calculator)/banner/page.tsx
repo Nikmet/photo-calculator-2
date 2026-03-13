@@ -1,6 +1,7 @@
-"use client";
+﻿"use client";
 
 import { useMemo, useState } from "react";
+import { CalculatorLoading } from "@/components/calculator/calculator-loading";
 import { useCalculatorDimensions } from "@/components/calculator/calculator-context";
 import { Card } from "@/components/ui/card";
 import { NumberInput } from "@/components/ui/number-input";
@@ -45,55 +46,58 @@ export default function BannerPage() {
         <p className="mt-2 text-sm text-[var(--muted)]">
           Ввод цен локальный для текущего расчета. Минимальные пороги для итогов берутся из БД.
         </p>
-        {isLoading ? <p className="mt-2 text-xs text-[var(--muted)]">Загрузка цен...</p> : null}
       </Card>
 
-      <div className="grid gap-5 lg:grid-cols-3">
-        <Card className="space-y-4 lg:col-span-2">
-          <h3 className="text-base font-semibold">Ввод цен</h3>
-          <div className="grid gap-4 md:grid-cols-2">
-            <NumberInput
-              id="banner-b300"
-              label="Б-300"
-              unit="руб/м²"
-              value={b300}
-              onChange={(value) => setB300Override(value)}
-            />
-            <NumberInput
-              id="banner-b400"
-              label="Б-400"
-              unit="руб/м²"
-              value={b400}
-              onChange={(value) => setB400Override(value)}
-            />
-            <NumberInput
-              id="banner-luv"
-              label="Люверсы"
-              unit="руб/шт"
-              value={luv}
-              onChange={(value) => setLuvOverride(value)}
-            />
-            <NumberInput
-              id="banner-luvers-step"
-              label="Шаг люверсов"
-              unit="мм"
-              value={luversStep}
-              onChange={(value) => setLuversStepOverride(value)}
-            />
-          </div>
-          <p className="text-xs text-[var(--muted)]">
-            Кол-во люверсов: <strong>{totals.luversCount.toFixed(2)}</strong> шт.
-          </p>
-        </Card>
+      {isLoading ? (
+        <CalculatorLoading inputRows={4} resultRows={4} />
+      ) : (
+        <div className="grid gap-5 lg:grid-cols-3">
+          <Card className="space-y-4 lg:col-span-2">
+            <h3 className="text-base font-semibold">Ввод цен</h3>
+            <div className="grid gap-4 md:grid-cols-2">
+              <NumberInput
+                id="banner-b300"
+                label="Б-300"
+                unit="руб/м²"
+                value={b300}
+                onChange={(value) => setB300Override(value)}
+              />
+              <NumberInput
+                id="banner-b400"
+                label="Б-400"
+                unit="руб/м²"
+                value={b400}
+                onChange={(value) => setB400Override(value)}
+              />
+              <NumberInput
+                id="banner-luv"
+                label="Люверсы"
+                unit="руб/шт"
+                value={luv}
+                onChange={(value) => setLuvOverride(value)}
+              />
+              <NumberInput
+                id="banner-luvers-step"
+                label="Шаг люверсов"
+                unit="мм"
+                value={luversStep}
+                onChange={(value) => setLuversStepOverride(value)}
+              />
+            </div>
+            <p className="text-xs text-[var(--muted)]">
+              Кол-во люверсов: <strong>{totals.luversCount.toFixed(2)}</strong> шт.
+            </p>
+          </Card>
 
-        <Card className="space-y-3 bg-white">
-          <h3 className="text-base font-semibold">Результат</h3>
-          <ResultItem label="Б-300 без люверсов" value={totals.b300Total} />
-          <ResultItem label="Б-400 без люверсов" value={totals.b400Total} />
-          <ResultItem label="Б-300 с люверсами" value={totals.b300TotalLuvers} />
-          <ResultItem label="Б-400 с люверсами" value={totals.b400TotalLuvers} />
-        </Card>
-      </div>
+          <Card className="space-y-3 bg-white">
+            <h3 className="text-base font-semibold">Результат</h3>
+            <ResultItem label="Б-300 без люверсов" value={totals.b300Total} />
+            <ResultItem label="Б-400 без люверсов" value={totals.b400Total} />
+            <ResultItem label="Б-300 с люверсами" value={totals.b300TotalLuvers} />
+            <ResultItem label="Б-400 с люверсами" value={totals.b400TotalLuvers} />
+          </Card>
+        </div>
+      )}
     </div>
   );
 }
