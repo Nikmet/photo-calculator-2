@@ -57,7 +57,7 @@ export function NumberInput({
           }
         }}
         onChange={(event) => onChange?.(normalizeNumber(event.target.value))}
-        className="h-11 rounded-xl border border-[var(--border)] bg-white px-3 text-base outline-none transition focus:border-[var(--accent)] focus:ring-2 focus:ring-[var(--accent-soft)] read-only:bg-slate-100/70"
+        className="h-10 rounded-lg border border-[var(--border)] bg-[var(--control)] px-3 text-base outline-none transition-[border-color,box-shadow,background-color] duration-150 focus:border-[var(--accent)] focus:ring-2 focus:ring-[var(--accent-soft)] read-only:bg-[var(--surface-muted)] read-only:text-[var(--muted)]"
       />
       {hint ? <span className="text-xs text-[var(--muted)]">{hint}</span> : null}
     </label>

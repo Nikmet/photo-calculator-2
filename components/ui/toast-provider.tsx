@@ -55,10 +55,13 @@ export function ToastProvider({ children }: PropsWithChildren) {
           <div
             key={toast.id}
             className={clsx(
-              "pointer-events-auto animate-toast-in rounded-xl border px-4 py-3 text-sm shadow-lg backdrop-blur",
-              toast.kind === "success" && "border-emerald-200 bg-emerald-50/95 text-emerald-900",
-              toast.kind === "error" && "border-red-200 bg-red-50/95 text-red-900",
-              toast.kind === "info" && "border-sky-200 bg-sky-50/95 text-sky-900",
+              "pointer-events-auto animate-toast-in rounded-lg border px-4 py-3 text-sm shadow-[var(--shadow)] backdrop-blur",
+              toast.kind === "success" &&
+                "border-[var(--accent-soft)] bg-[var(--card)]/95 text-[var(--accent-strong)]",
+              toast.kind === "error" &&
+                "border-[var(--danger)]/30 bg-[var(--danger-soft)]/95 text-[var(--danger)]",
+              toast.kind === "info" &&
+                "border-[var(--border)] bg-[var(--card)]/95 text-[var(--text)]",
             )}
           >
             {toast.message}

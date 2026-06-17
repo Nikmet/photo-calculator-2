@@ -7,7 +7,7 @@ export default function CalculatorLayout({ children }: PropsWithChildren) {
     <CalculatorProvider>
       <div className="min-h-screen">
         <SiteHeader />
-        <main className="mx-auto w-full max-w-6xl px-4 py-6">{children}</main>
+        <main className="mx-auto w-full max-w-6xl px-4 py-5">{children}</main>
       </div>
     </CalculatorProvider>
   );

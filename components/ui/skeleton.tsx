@@ -5,5 +5,5 @@ type SkeletonProps = {
 };
 
 export function Skeleton({ className }: SkeletonProps) {
-  return <div aria-hidden className={clsx("animate-pulse rounded-xl bg-[var(--accent-soft)]/70", className)} />;
+  return <div aria-hidden className={clsx("animate-pulse rounded-lg bg-[var(--surface-muted)]", className)} />;
 }

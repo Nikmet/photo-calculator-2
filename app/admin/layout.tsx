@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState, type PropsWithChildren } from "react";
 import { AdminTokenProvider, useAdminToken } from "@/components/admin/admin-token-context";
+import { Button } from "@/components/ui/button";
 import { APP_VERSION } from "@/lib/constants";
 
 const links = [
@@ -18,9 +19,9 @@ function AdminLayoutBody({ children }: PropsWithChildren) {
   const [showToken, setShowToken] = useState(false);
 
   return (
-    <div className="mx-auto flex min-h-screen w-full max-w-6xl flex-col gap-6 px-4 py-6">
-      <header className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-5 shadow-[var(--shadow)]">
-        <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+    <div className="mx-auto flex min-h-screen w-full max-w-6xl flex-col gap-5 px-4 py-5">
+      <header className="rounded-lg border border-[var(--border)] bg-[var(--card)] p-5 shadow-[var(--shadow-soft)]">
+        <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
           <div>
             <Link href="/" className="text-sm text-[var(--muted)] hover:text-[var(--text)]">
               ← На главную
@@ -38,16 +39,17 @@ function AdminLayoutBody({ children }: PropsWithChildren) {
                 type={showToken ? "text" : "password"}
                 value={token}
                 onChange={(event) => setToken(event.target.value)}
-                className="h-10 w-full rounded-xl border border-[var(--border)] bg-white px-3 text-sm outline-none transition-all duration-300 focus:border-[var(--accent)] focus:ring-2 focus:ring-[var(--accent-soft)]"
+                className="h-10 w-full rounded-lg border border-[var(--border)] bg-[var(--control)] px-3 text-sm outline-none transition-[border-color,box-shadow] duration-150 focus:border-[var(--accent)] focus:ring-2 focus:ring-[var(--accent-soft)]"
                 placeholder="Введите ADMIN_TOKEN"
               />
-              <button
+              <Button
                 type="button"
+                variant="secondary"
                 onClick={() => setShowToken((prev) => !prev)}
-                className="h-10 rounded-xl border border-[var(--border)] px-3 text-xs font-medium text-[var(--muted)] transition-all duration-300 hover:border-[var(--accent)] hover:text-[var(--accent)]"
+                className="px-3 text-xs"
               >
                 {showToken ? "Скрыть" : "Показать"}
-              </button>
+              </Button>
             </div>
           </label>
         </div>
@@ -60,10 +62,10 @@ function AdminLayoutBody({ children }: PropsWithChildren) {
                 key={link.href}
                 href={link.href}
                 className={clsx(
-                  "rounded-full border px-4 py-2 text-sm font-medium transition-all duration-300",
+                  "rounded-lg border px-3.5 py-2 text-sm font-medium transition-[border-color,background-color,color] duration-150",
                   active
-                    ? "border-[var(--accent)] bg-[var(--accent)] text-white shadow-[0_6px_18px_rgba(45,127,113,0.35)]"
-                    : "border-[var(--border)] hover:border-[var(--accent)]/70",
+                    ? "border-[var(--accent)] bg-[var(--accent)] text-[var(--card)]"
+                    : "border-[var(--border)] bg-[var(--control)] hover:border-[var(--border-strong)] hover:bg-[var(--surface)]",
                 )}
               >
                 {link.label}

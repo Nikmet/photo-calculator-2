@@ -9,7 +9,7 @@ export function Card({ children, className }: CardProps) {
   return (
     <section
       className={clsx(
-        "animate-fade-in-up rounded-2xl border border-[var(--border)] bg-[var(--card)] p-5 shadow-[var(--shadow)] transition-all duration-400 ease-out",
+        "animate-fade-in-up rounded-lg border border-[var(--border)] bg-[var(--card)] p-5 shadow-[var(--shadow-soft)] transition-[border-color,box-shadow,transform] duration-200 ease-out",
         className,
       )}
     >

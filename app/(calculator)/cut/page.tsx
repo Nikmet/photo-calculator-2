@@ -59,7 +59,7 @@ export default function CutPage() {
     <div className="space-y-5">
       <Card>
         <h2 className="text-2xl font-semibold">Лазерная резка</h2>
-        <p className="mt-2 text-sm text-[var(--muted)]">
+        <p className="mt-2 text-sm leading-6 text-[var(--muted)]">
           Множитель сложности: {CUT_MULTIPLIER[difficulty]}x. Гравировка добавляет фикс {prices.env} руб.
         </p>
       </Card>
@@ -70,7 +70,7 @@ export default function CutPage() {
         <div className="grid gap-5 lg:grid-cols-3">
           <Card className="space-y-4 lg:col-span-2">
             <h3 className="text-base font-semibold">Ввод цен и опций</h3>
-            <div className="grid gap-4 md:grid-cols-2">
+            <div className="grid gap-3 rounded-lg border border-[var(--border)] bg-[var(--surface)] p-4 md:grid-cols-2">
               <NumberInput
                 id="cut-plywood"
                 label="Фанера"
@@ -105,7 +105,7 @@ export default function CutPage() {
             </div>
           </Card>
 
-          <Card className="space-y-3 bg-white">
+          <Card className="space-y-3">
             <h3 className="text-base font-semibold">Результат</h3>
             <ResultItem label="Фанера" value={totals.plywoodTotal} />
             <ResultItem label="Акрил" value={totals.acrylicTotal} />

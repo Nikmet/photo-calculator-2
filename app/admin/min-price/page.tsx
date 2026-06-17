@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useState } from "react";
 import { useAdminToken } from "@/components/admin/admin-token-context";
+import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { NumberInput } from "@/components/ui/number-input";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -16,14 +17,14 @@ function MinPriceSkeleton() {
       <div className="grid gap-4 md:grid-cols-2">
         <div className="space-y-2">
           <Skeleton className="h-4 w-40" />
-          <Skeleton className="h-11 w-full" />
+          <Skeleton className="h-10 w-full" />
         </div>
         <div className="space-y-2">
           <Skeleton className="h-4 w-44" />
-          <Skeleton className="h-11 w-full" />
+          <Skeleton className="h-10 w-full" />
         </div>
       </div>
-      <Skeleton className="h-11 w-52" />
+      <Skeleton className="h-10 w-52" />
     </div>
   );
 }
@@ -99,7 +100,7 @@ export default function AdminMinPricePage() {
     <div className="space-y-5">
       <Card>
         <h2 className="text-xl font-semibold">Базовые настройки</h2>
-        <p className="mt-2 text-sm text-[var(--muted)]">
+        <p className="mt-2 text-sm leading-6 text-[var(--muted)]">
           Глобальный минимум используется как резервный, если для позиции нет индивидуального порога.
         </p>
       </Card>
@@ -125,14 +126,14 @@ export default function AdminMinPricePage() {
                 onChange={setLuversStepDefault}
               />
             </div>
-            <button
+            <Button
               type="button"
               onClick={() => void saveConfig()}
               disabled={isSaving}
-              className="h-11 rounded-xl border border-[var(--accent)] bg-[var(--accent)] px-4 text-sm font-medium text-white transition-all duration-300 hover:opacity-90 disabled:opacity-60"
+              className="w-fit"
             >
               {isSaving ? "Сохранение..." : "Сохранить настройки"}
-            </button>
+            </Button>
           </>
         )}
       </Card>

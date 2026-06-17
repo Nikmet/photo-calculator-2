@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useAdminToken } from "@/components/admin/admin-token-context";
+import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { NumberInput } from "@/components/ui/number-input";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -19,15 +20,15 @@ function PriceItemsSkeleton() {
       {Array.from({ length: 6 }).map((_, index) => (
         <div
           key={`price-skeleton-${index}`}
-          className="grid gap-3 rounded-xl border border-[var(--border)] bg-white p-4 md:grid-cols-[1fr_170px_170px_130px]"
+          className="grid gap-3 rounded-lg border border-[var(--border)] bg-[var(--surface)] p-4 md:grid-cols-[1fr_170px_170px_130px]"
         >
           <div className="space-y-2">
             <Skeleton className="h-5 w-44" />
             <Skeleton className="h-4 w-32" />
           </div>
-          <Skeleton className="h-11 w-full self-end" />
-          <Skeleton className="h-11 w-full self-end" />
-          <Skeleton className="h-11 w-full self-end" />
+          <Skeleton className="h-10 w-full self-end" />
+          <Skeleton className="h-10 w-full self-end" />
+          <Skeleton className="h-10 w-full self-end" />
         </div>
       ))}
     </div>
@@ -165,7 +166,7 @@ export default function AdminPricesPage() {
     <div className="space-y-5">
       <Card>
         <h2 className="text-xl font-semibold">Управление ценами</h2>
-        <p className="mt-2 text-sm text-[var(--muted)]">
+        <p className="mt-2 text-sm leading-6 text-[var(--muted)]">
           Для каждой позиции редактируются цена и минимальная цена итоговой стоимости.
         </p>
       </Card>
@@ -179,7 +180,7 @@ export default function AdminPricesPage() {
             {items.map((item) => (
               <div
                 key={item.name}
-                className="grid gap-3 rounded-xl border border-[var(--border)] bg-white p-4 md:grid-cols-[1fr_170px_170px_130px]"
+                className="grid gap-3 rounded-lg border border-[var(--border)] bg-[var(--surface)] p-4 md:grid-cols-[1fr_170px_170px_130px]"
               >
                 <div>
                   <p className="font-semibold">{item.label}</p>
@@ -211,40 +212,41 @@ export default function AdminPricesPage() {
                     }))
                   }
                 />
-                <button
+                <Button
                   type="button"
                   onClick={() => void savePrice(item.name)}
                   disabled={savingName === item.name}
-                  className="h-11 self-end rounded-xl border border-[var(--accent)] bg-[var(--accent)] px-4 text-sm font-medium text-white transition-all duration-300 hover:opacity-90 disabled:opacity-60"
+                  className="self-end"
                 >
                   {savingName === item.name ? "Сохранение..." : "Сохранить"}
-                </button>
+                </Button>
               </div>
             ))}
           </div>
         )}
       </Card>
 
-      <Card className="space-y-3 border-red-200">
+      <Card className="space-y-3 border-[var(--danger)]/30 bg-[var(--danger-soft)]/45">
         <h3 className="text-base font-semibold">Сброс цен</h3>
-        <p className="text-sm text-[var(--muted)]">
+        <p className="text-sm leading-6 text-[var(--muted)]">
           Введите <code>reset data</code> и нажмите кнопку.
         </p>
         <input
           type="text"
           value={resetConfirmation}
           onChange={(event) => setResetConfirmation(event.target.value)}
-          className="mr-2 h-11 w-full max-w-sm rounded-xl border border-[var(--border)] bg-white px-3 text-sm outline-none transition-all duration-300 focus:border-[var(--accent)] focus:ring-2 focus:ring-[var(--accent-soft)]"
+          className="mr-2 h-10 w-full max-w-sm rounded-lg border border-[var(--border)] bg-[var(--control)] px-3 text-sm outline-none transition-[border-color,box-shadow] duration-150 focus:border-[var(--accent)] focus:ring-2 focus:ring-[var(--accent-soft)]"
           placeholder="reset data"
         />
-        <button
+        <Button
           type="button"
           onClick={() => void resetPrices()}
           disabled={isResetLoading}
-          className="h-11 rounded-xl border border-red-500 px-4 text-sm font-medium text-red-600 transition-all duration-300 hover:bg-red-50 disabled:opacity-60"
+          variant="danger"
+          className="w-fit"
         >
           {isResetLoading ? "Сброс..." : "Сбросить цены"}
-        </button>
+        </Button>
       </Card>
     </div>
   );

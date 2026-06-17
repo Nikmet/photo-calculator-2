@@ -1,16 +1,24 @@
 @import "tailwindcss";
 
 :root {
-  --bg: #f2f5f4;
-  --text: #1f2a29;
-  --muted: #6c7a77;
-  --card: #fbfcfb;
-  --border: #d9e2df;
-  --accent: #2d7f71;
-  --accent-soft: #d9efe9;
-  --accent-strong: #1e5f54;
-  --result-bg: linear-gradient(135deg, #f4fbf9 0%, #e5f4ef 100%);
-  --shadow: 0 12px 30px rgba(29, 52, 49, 0.09);
+  --bg: oklch(96.5% 0.011 190);
+  --text: oklch(24% 0.027 205);
+  --muted: oklch(50% 0.026 205);
+  --card: oklch(99% 0.006 190);
+  --surface: oklch(97.8% 0.009 190);
+  --surface-muted: oklch(94.2% 0.013 190);
+  --control: oklch(99.4% 0.004 190);
+  --border: oklch(86.5% 0.018 190);
+  --border-strong: oklch(78% 0.025 190);
+  --accent: oklch(48% 0.095 183);
+  --accent-soft: oklch(91.5% 0.04 183);
+  --accent-strong: oklch(34% 0.072 183);
+  --warning: oklch(64% 0.11 70);
+  --danger: oklch(55% 0.15 26);
+  --danger-soft: oklch(94% 0.035 26);
+  --result-bg: oklch(96.8% 0.026 183);
+  --shadow: 0 1px 2px oklch(20% 0.035 205 / 0.06), 0 12px 28px oklch(20% 0.035 205 / 0.06);
+  --shadow-soft: 0 1px 2px oklch(20% 0.035 205 / 0.05);
 }
 
 @theme inline {
@@ -20,11 +28,13 @@
 
 body {
   font-family: var(--font-manrope), sans-serif;
-  background:
-    radial-gradient(circle at 20% 0%, #e8f4ef 0%, transparent 50%),
-    radial-gradient(circle at 85% 10%, #e3eeff 0%, transparent 40%),
-    var(--bg);
+  background: linear-gradient(180deg, oklch(98.4% 0.008 190) 0%, var(--bg) 280px);
   color: var(--text);
+}
+
+::selection {
+  background: var(--accent-soft);
+  color: var(--accent-strong);
 }
 
 input[type="number"]::-webkit-outer-spin-button,

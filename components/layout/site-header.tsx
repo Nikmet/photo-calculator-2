@@ -20,14 +20,14 @@ export function SiteHeader() {
   const pathname = usePathname();
 
   return (
-    <header className="border-b border-[var(--accent)]/20 bg-[linear-gradient(135deg,#f7fcfb_0%,#ecf6f2_55%,#e7f1ff_100%)] shadow-[0_10px_30px_rgba(25,60,55,0.12)] backdrop-blur">
-      <div className="mx-auto flex w-full max-w-6xl flex-col gap-5 px-4 py-6">
-        <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+    <header className="border-b border-[var(--border)] bg-[var(--card)]/90 backdrop-blur">
+      <div className="mx-auto flex w-full max-w-6xl flex-col gap-4 px-4 py-4">
+        <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
           <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.24em] text-[var(--accent-strong)]">
+            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">
               Photo Studio · v{APP_VERSION}
             </p>
-            <h1 className="text-4xl font-semibold tracking-tight text-[var(--text)] sm:text-5xl">
+            <h1 className="mt-1 text-3xl font-semibold tracking-tight text-[var(--text)] sm:text-4xl">
               Photo Calculator
             </h1>
           </div>
@@ -40,10 +40,10 @@ export function SiteHeader() {
                   key={link.href}
                   href={link.href}
                   className={clsx(
-                    "rounded-full border px-4 py-2 text-sm font-medium transition-all duration-300 ease-out",
+                    "rounded-lg border px-3.5 py-2 text-sm font-medium transition-[border-color,background-color,color,box-shadow] duration-150",
                     active
-                      ? "border-[var(--accent)] bg-[var(--accent)] text-white shadow-[0_6px_18px_rgba(45,127,113,0.35)]"
-                      : "border-[var(--border)] bg-[var(--card)] text-[var(--text)] hover:border-[var(--accent)]/60 hover:bg-white",
+                      ? "border-[var(--accent)] bg-[var(--accent)] text-[var(--card)] shadow-[var(--shadow-soft)]"
+                      : "border-[var(--border)] bg-[var(--control)] text-[var(--text)] hover:border-[var(--border-strong)] hover:bg-[var(--surface)]",
                   )}
                 >
                   {link.label}

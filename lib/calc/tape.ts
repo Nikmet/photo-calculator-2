@@ -1,5 +1,7 @@
 import { applyMinPrice, normalizeNumber } from "@/lib/math";
 
+export type LfpMaterial = "none" | "plastic" | "composite";
+
 type TapeInput = {
   square: number;
   lfpMinPrice: number;
@@ -7,8 +9,9 @@ type TapeInput = {
   lfp: number;
   pc: number;
   plastic: number;
+  composite: number;
   mf: number;
-  withPlastic: boolean;
+  lfpMaterial: LfpMaterial;
   withPlastic2: boolean;
   withMF: boolean;
 };
@@ -18,7 +21,12 @@ export function calculateTapeTotals(input: TapeInput) {
   const lfpBase = square * normalizeNumber(input.lfp);
   const pcBase = square * normalizeNumber(input.pc);
 
-  const lfpExtra = input.withPlastic ? square * normalizeNumber(input.plastic) : 0;
+  const lfpMaterialPrices: Record<LfpMaterial, number> = {
+    none: 0,
+    plastic: input.plastic,
+    composite: input.composite,
+  };
+  const lfpExtra = square * normalizeNumber(lfpMaterialPrices[input.lfpMaterial]);
   const pcPlasticExtra = input.withPlastic2 ? square * normalizeNumber(input.plastic) : 0;
   const pcMfExtra = input.withMF ? square * normalizeNumber(input.mf) : 0;
 

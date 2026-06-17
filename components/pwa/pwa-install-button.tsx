@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { Button } from "@/components/ui/button";
 
 type BeforeInstallPromptEvent = Event & {
   prompt: () => Promise<void>;
@@ -36,8 +37,9 @@ export function PwaInstallButton() {
   }
 
   return (
-    <button
+    <Button
       type="button"
+      variant="secondary"
       onClick={async () => {
         await deferredPrompt.prompt();
         const choice = await deferredPrompt.userChoice;
@@ -46,9 +48,8 @@ export function PwaInstallButton() {
         }
         setDeferredPrompt(null);
       }}
-      className="rounded-full border border-[var(--accent)]/40 bg-white px-4 py-2 text-sm font-medium text-[var(--accent-strong)] transition-all duration-300 hover:border-[var(--accent)] hover:bg-[var(--accent-soft)]"
     >
       Установить приложение
-    </button>
+    </Button>
   );
 }

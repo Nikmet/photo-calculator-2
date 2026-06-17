@@ -48,7 +48,7 @@ export default function TermoPage() {
     <div className="space-y-5">
       <Card>
         <h2 className="text-2xl font-semibold">Термотрансфер</h2>
-        <p className="mt-2 text-sm text-[var(--muted)]">
+        <p className="mt-2 text-sm leading-6 text-[var(--muted)]">
           Множитель сложности: {TERMO_MULTIPLIER[difficulty]}x.
         </p>
       </Card>
@@ -59,7 +59,7 @@ export default function TermoPage() {
         <div className="grid gap-5 lg:grid-cols-3">
           <Card className="space-y-4 lg:col-span-2">
             <h3 className="text-base font-semibold">Ввод цен и опций</h3>
-            <div className="grid gap-4 md:grid-cols-2">
+            <div className="grid gap-3 rounded-lg border border-[var(--border)] bg-[var(--surface)] p-4 md:grid-cols-2">
               <NumberInput
                 id="termo-tf"
                 label="Термоткань"
@@ -86,7 +86,7 @@ export default function TermoPage() {
             </div>
           </Card>
 
-          <Card className="space-y-3 bg-white">
+          <Card className="space-y-3">
             <h3 className="text-base font-semibold">Результат</h3>
             <ResultItem label="Термоткань" value={totals.tfTotal} />
             <ResultItem label="Термопленка" value={totals.tpTotal} />

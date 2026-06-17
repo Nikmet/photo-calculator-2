@@ -7,9 +7,9 @@ type ResultItemProps = {
 
 export function ResultItem({ label, value }: ResultItemProps) {
   return (
-    <div className="flex items-center justify-between rounded-xl border border-[var(--accent)]/35 bg-[image:var(--result-bg)] px-4 py-3.5 shadow-[inset_0_1px_0_rgba(255,255,255,0.8)]">
-      <span className="text-sm font-medium text-[var(--accent-strong)]">{label}</span>
-      <strong className="font-mono text-xl font-semibold tracking-tight text-[var(--accent-strong)]">
+    <div className="flex items-center justify-between gap-4 rounded-lg border border-[var(--border)] bg-[var(--result-bg)] px-4 py-3">
+      <span className="text-sm font-medium text-[var(--text)]">{label}</span>
+      <strong className="shrink-0 font-mono text-lg font-semibold tracking-tight text-[var(--accent-strong)]">
         {formatRub(value)}
       </strong>
     </div>

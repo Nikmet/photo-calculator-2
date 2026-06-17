@@ -43,7 +43,7 @@ export default function BannerPage() {
     <div className="space-y-5">
       <Card>
         <h2 className="text-2xl font-semibold">Баннер</h2>
-        <p className="mt-2 text-sm text-[var(--muted)]">
+        <p className="mt-2 text-sm leading-6 text-[var(--muted)]">
           Ввод цен локальный для текущего расчета. Минимальные пороги для итогов берутся из БД.
         </p>
       </Card>
@@ -54,42 +54,44 @@ export default function BannerPage() {
         <div className="grid gap-5 lg:grid-cols-3">
           <Card className="space-y-4 lg:col-span-2">
             <h3 className="text-base font-semibold">Ввод цен</h3>
-            <div className="grid gap-4 md:grid-cols-2">
-              <NumberInput
-                id="banner-b300"
-                label="Б-300"
-                unit="руб/м²"
-                value={b300}
-                onChange={(value) => setB300Override(value)}
-              />
-              <NumberInput
-                id="banner-b400"
-                label="Б-400"
-                unit="руб/м²"
-                value={b400}
-                onChange={(value) => setB400Override(value)}
-              />
-              <NumberInput
-                id="banner-luv"
-                label="Люверсы"
-                unit="руб/шт"
-                value={luv}
-                onChange={(value) => setLuvOverride(value)}
-              />
-              <NumberInput
-                id="banner-luvers-step"
-                label="Шаг люверсов"
-                unit="мм"
-                value={luversStep}
-                onChange={(value) => setLuversStepOverride(value)}
-              />
+            <div className="rounded-lg border border-[var(--border)] bg-[var(--surface)] p-4">
+              <div className="grid gap-3 md:grid-cols-2">
+                <NumberInput
+                  id="banner-b300"
+                  label="Б-300"
+                  unit="руб/м²"
+                  value={b300}
+                  onChange={(value) => setB300Override(value)}
+                />
+                <NumberInput
+                  id="banner-b400"
+                  label="Б-400"
+                  unit="руб/м²"
+                  value={b400}
+                  onChange={(value) => setB400Override(value)}
+                />
+                <NumberInput
+                  id="banner-luv"
+                  label="Люверсы"
+                  unit="руб/шт"
+                  value={luv}
+                  onChange={(value) => setLuvOverride(value)}
+                />
+                <NumberInput
+                  id="banner-luvers-step"
+                  label="Шаг люверсов"
+                  unit="мм"
+                  value={luversStep}
+                  onChange={(value) => setLuversStepOverride(value)}
+                />
+              </div>
             </div>
             <p className="text-xs text-[var(--muted)]">
               Кол-во люверсов: <strong>{totals.luversCount.toFixed(2)}</strong> шт.
             </p>
           </Card>
 
-          <Card className="space-y-3 bg-white">
+          <Card className="space-y-3">
             <h3 className="text-base font-semibold">Результат</h3>
             <ResultItem label="Б-300 без люверсов" value={totals.b300Total} />
             <ResultItem label="Б-400 без люверсов" value={totals.b400Total} />
